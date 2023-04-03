@@ -7,7 +7,7 @@ describe "Classes" do
 
   it "should demonstrate instances_of_classes_can_be_created_with_new" do
     fido = Dog.new
-    fido.class.should eql __
+    fido.class.should eql Dog
   end
 
   # ------------------------------------------------------------------
@@ -20,19 +20,19 @@ describe "Classes" do
 
   it "should demonstrate instance_variables_can_be_set_by_assigning_to_them" do
     fido = Dog2.new
-    fido.instance_variables.should eql __
+    fido.instance_variables.should eql []
 
     fido.set_name("Fido")
-    fido.instance_variables.should eql __
+    fido.instance_variables.should eql [:@name]
   end
 
   it "should demonstrate instance_variables_cannot_be_accessed_outside_the_class" do
     fido = Dog2.new
     fido.set_name("Fido")
 
-    expect(fido.name).to raise_error(__)
+    expect{fido.name}.to raise_error(NoMethodError)
 
-    expect(eval "fido.@name").to raise_error(__)
+    expect{eval "fido.@name"}.to raise_error(SyntaxError)
 
     # NOTE: Using eval because the above line is a syntax error.
   end
@@ -41,15 +41,15 @@ describe "Classes" do
     fido = Dog2.new
     fido.set_name("Fido")
 
-    fido.instance_variable_get("@name").should eql __
+    fido.instance_variable_get("@name").should eql "Fido"
   end
 
   it "should demonstrate you_can_rip_the_value_out_using_instance_eval" do
     fido = Dog2.new
     fido.set_name("Fido")
 
-    fido.instance_eval("@name")  # string version.should eql __
-    fido.instance_eval { @name } # block version.should eql __
+    fido.instance_eval("@name").should eql "Fido"  # string version.should eql __
+    fido.instance_eval { @name }.should eql "Fido" # block version.should eql __
   end
 
   # ------------------------------------------------------------------
@@ -67,7 +67,7 @@ describe "Classes" do
     fido = Dog3.new
     fido.set_name("Fido")
 
-    fido.name.should eql __
+    fido.name.should eql "Fido"
   end
 
   # ------------------------------------------------------------------
@@ -85,7 +85,7 @@ describe "Classes" do
     fido = Dog4.new
     fido.set_name("Fido")
 
-    fido.name.should eql __
+    fido.name.should eql "Fido"
   end
 
   # ------------------------------------------------------------------
@@ -99,7 +99,7 @@ describe "Classes" do
     fido = Dog5.new
 
     fido.name = "Fido"
-    fido.name.should eql __
+    fido.name.should eql "Fido"
   end
 
   # ------------------------------------------------------------------
@@ -113,11 +113,11 @@ describe "Classes" do
 
   it "should demonstrate initialize_provides_initial_values_for_instance_variables" do
     fido = Dog6.new("Fido")
-    fido.name.should eql __
+    fido.name.should eql "Fido"
   end
 
   it "should demonstrate args_to_new_must_match_initialize" do
-    expect(Dog6.new).to raise_error(__)
+    expect{Dog6.new}.to raise_error(ArgumentError)
     # THINK ABOUT IT:
     # Why is this so?
   end
@@ -126,7 +126,7 @@ describe "Classes" do
     fido = Dog6.new("Fido")
     rover = Dog6.new("Rover")
 
-    (rover.name != fido.name).should eql __
+    (rover.name != fido.name).should eql true
   end
 
   # ------------------------------------------------------------------
@@ -143,7 +143,7 @@ describe "Classes" do
     end
 
     def to_s
-      __
+      name
     end
 
     def inspect
@@ -155,32 +155,32 @@ describe "Classes" do
     fido = Dog7.new("Fido")
 
     fidos_self = fido.get_self
-    fidos_self.should eql __
+    fidos_self.inspect.should eql fido.inspect
   end
 
   it "should demonstrate to_s_provides_a_string_version_of_the_object" do
     fido = Dog7.new("Fido")
-    fido.to_s.should eql __
+    fido.to_s.should eql "Fido"
   end
 
   it "should demonstrate to_s_is_used_in_string_interpolation" do
     fido = Dog7.new("Fido")
-    "My dog is #{fido}".should eql __
+    "My dog is '#{fido}'".should eql "My dog is 'Fido'"
   end
 
   it "should demonstrate inspect_provides_a_more_complete_string_version" do
     fido = Dog7.new("Fido")
-    fido.inspect.should eql __
+    fido.inspect.should eql "<Dog named 'Fido'>"
   end
 
   it "should demonstrate all_objects_support_to_s_and_inspect" do
     array = [1,2,3]
 
-    array.to_s.should eql __
-    array.inspect.should eql __
+    array.to_s.should eql "[1, 2, 3]"
+    array.inspect.should eql "[1, 2, 3]"
 
-    "STRING".to_s.should eql __
-    "STRING".inspect.should eql __
+    "STRING".to_s.should eql "STRING"
+    "STRING".inspect.should eql "\"STRING\""
   end
 
 end

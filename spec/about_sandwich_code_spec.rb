@@ -14,7 +14,7 @@ describe "Sandwich Code" do
   end
 
   it "should demonstrate counting_lines" do
-    count_lines("example_file.txt").should eql __
+    count_lines("example_file.txt").should eql 2
   end
 
   # ------------------------------------------------------------------
@@ -29,7 +29,7 @@ describe "Sandwich Code" do
   end
 
   it "should demonstrate finding_lines" do
-    find_line("example_file.txt").should eql __
+    find_line("example_file.txt").should eql nil
   end
 
   # ------------------------------------------------------------------
@@ -74,17 +74,22 @@ describe "Sandwich Code" do
   end
 
   it "should demonstrate counting_lines2" do
-    count_lines2("example_file.txt").should eql __
+    count_lines2("example_file.txt").should eql 2
   end
 
   # ------------------------------------------------------------------
 
   def find_line2(file_name)
     # Rewrite find_line using the file_sandwich library function.
+    file_sandwich(file_name) do |file| 
+      while line = file.gets
+        return line if line.match(/e/)
+      end
+    end
   end
 
   it "should demonstrate finding_lines2" do
-    find_line2("example_file.txt").should eql __
+    find_line2("example_file.txt").should eql nil
   end
 
   # ------------------------------------------------------------------
@@ -100,6 +105,6 @@ describe "Sandwich Code" do
   end
 
   it "should demonstrate open_handles_the_file_sandwich_when_given_a_block" do
-    count_lines3("example_file.txt").should eql __
+    count_lines3("example_file.txt").should eql 2
   end
 end

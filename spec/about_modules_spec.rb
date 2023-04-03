@@ -13,7 +13,7 @@ describe "Modules" do
   end
 
   it "should demonstrate cant_instantiate_modules" do
-    expect(Nameable.new).to raise_error(__)
+    expect{Nameable.new}.to raise_error(NoMethodError)
   end
 
   # ------------------------------------------------------------------
@@ -38,23 +38,23 @@ describe "Modules" do
 
   it "should demonstrate normal_methods_are_available_in_the_object" do
     fido = Dog.new
-    fido.bark.should eql __
+    fido.bark.should eql "WOOF"
   end
 
   it "should demonstrate module_methods_are_also_available_in_the_object" do
     fido = Dog.new
-    expect(fido.set_name("Rover")).should_not raise_error(Exception)
+    expect{ fido.set_name("Rover") }.not_to raise_error(NoMethodError)
   end
 
   it "should demonstrate module_methods_can_affect_instance_variables_in_the_object" do
     fido = Dog.new
-    fido.name.should eql __
+    fido.name.should eql "Fido"
     fido.set_name("Rover")
-    fido.name.should eql __
+    fido.name.should eql "Rover"
   end
 
   it "should demonstrate classes_can_override_module_methods" do
     fido = Dog.new
-    fido.here.should eql __
+    fido.here.should eql :in_object
   end
 end
