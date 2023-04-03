@@ -3,33 +3,33 @@ require 'spec_helper'
 describe "Matchers" do
 
   it "should allow matching with equality operator" do
-    true.should == false
+    true.should == true
   end
 
   it "should allow matching with built in matchers" do
-    true.should be_false
+    true.should_not == false
   end
 
   it "should allow matching with built in matchers and a message" do
-    true.should_not be_true, "This should be false -- Please fix this"
+    true.should_not == false
   end
 
   it "should allow matching of variables" do
-    expected_value = __
+    expected_value = 2
     actual_value = 1 + 1
 
     actual_value.should == expected_value
   end
 
   it "should allow matching of variables using a better way" do
-    expected_value = __
+    expected_value = 2
     actual_value = 1 + 1
 
     actual_value.should eq(expected_value)
   end
 
   it "should allow matching of values using equality" do
-    expected_value = __
+    expected_value = 2
     actual_value = 1 + 1
 
     actual_value.should eql(expected_value)
@@ -40,11 +40,11 @@ describe "Matchers" do
     expected_value = "I should be something else"
     actual_value = expected_value
 
-    actual_value.should_not equal(expected_value)
+    actual_value.should equal(expected_value)
   end
 
   it "should allow matching near values" do
-    2.should be_within(3).of(_n_)
+    2.should be_within(0.1).of(2.01)
   end
 
   #be_nil            - nil

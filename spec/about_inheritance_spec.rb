@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe "Inheritance" do
-
+  class Inhertance_Spec
+  
   class Dog
     attr_reader :name
 
@@ -23,42 +24,42 @@ describe "Inheritance" do
       "yip"
     end
   end
-
+end
   it "should demonstrate subclasses_have_the_parent_as_an_ancestor" do
-    Chihuahua.ancestors.include?(Dog).should eql __
+    Inhertance_Spec::Chihuahua.ancestors.include?(Inhertance_Spec::Dog).should eql true
   end
 
   it "should demonstrate all_classes_ultimately_inherit_from_object" do
-    Chihuahua.ancestors.include?(Object).should eql __
+    Inhertance_Spec::Chihuahua.ancestors.include?(Object).should eql true
   end
 
   it "should demonstrate subclasses_inherit_behavior_from_parent_class" do
-    chico = Chihuahua.new("Chico")
-    chico.name.should eql __
+    chico = Inhertance_Spec::Chihuahua.new("Chico")
+    chico.name.should eql "Chico"
   end
 
   it "should demonstrate subclasses_add_new_behavior" do
-    chico = Chihuahua.new("Chico")
-    chico.wag.should eql __
+    chico = Inhertance_Spec::Chihuahua.new("Chico")
+    chico.wag.should eql :happy
 
     expect{
-      fido = Dog.new("Fido")
+      fido =Inhertance_Spec::Dog.new("Fido")
       fido.wag
-    }.to raise_error(__)
+    }.to raise_error(NoMethodError)
 
   end
 
   it "should demonstrate subclasses_can_modify_existing_behavior" do
-    chico = Chihuahua.new("Chico")
-    chico.bark.should eql __
+    chico = Inhertance_Spec::Chihuahua.new("Chico")
+    chico.bark.should eql "yip"
 
-    fido = Dog.new("Fido")
-    fido.bark.should eql __
+    fido = Inhertance_Spec::Dog.new("Fido")
+    fido.bark.should eql "WOOF"
   end
 
   # ------------------------------------------------------------------
 
-  class BullDog < Dog
+  class BullDog < Inhertance_Spec::Dog
     def bark
       super + ", GROWL"
     end
@@ -66,12 +67,12 @@ describe "Inheritance" do
 
   it "should demonstrate subclasses_can_invoke_parent_behavior_via_super" do
     ralph = BullDog.new("Ralph")
-    ralph.bark.should eql __
+    ralph.bark.should eql "WOOF, GROWL"
   end
 
   # ------------------------------------------------------------------
 
-  class GreatDane < Dog
+  class GreatDane < Inhertance_Spec::Dog
     def growl
       super.bark + ", GROWL"
     end
@@ -79,7 +80,7 @@ describe "Inheritance" do
 
   it "should demonstrate super_does_not_work_cross_method" do
     george = GreatDane.new("George")
-    expect(george.growl).to raise_error(__)
+    expect{george.growl}.to raise_error(NoMethodError)
   end
 
 end
